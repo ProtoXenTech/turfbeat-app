@@ -60,4 +60,24 @@ class ClubRepository(
     suspend fun leaveClub(clubId: Int): ApiResponse<Unit> {
         return safeApiCall { apiService.leaveClub(clubId) }
     }
+
+    suspend fun updateMember(memberId: Int, data: Map<String, Any>): ApiResponse<ClubMemberDto> {
+        return safeApiCall { apiService.updateMember(memberId, data) }
+    }
+
+    suspend fun removeMember(memberId: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.removeMember(memberId) }
+    }
+
+    suspend fun handleJoinRequest(requestId: Int, status: String): ApiResponse<ClubJoinRequestDto> {
+        return safeApiCall { apiService.handleJoinRequest(requestId, mapOf("status" to status)) }
+    }
+
+    suspend fun submitApprovalRequest(): ApiResponse<Unit> {
+        return safeApiCall { apiService.submitApprovalRequest() }
+    }
+
+    suspend fun createClubMatch(data: Map<String, Any>): ApiResponse<MatchDto> {
+        return safeApiCall { apiService.createClubMatch(data) }
+    }
 }

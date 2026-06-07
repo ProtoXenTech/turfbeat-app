@@ -87,6 +87,27 @@ interface ApiService {
     @DELETE("clubs/player/me/clubs/{clubId}")
     suspend fun leaveClub(@Path("clubId") clubId: Int): Response<ApiResponse<Unit>>
 
+    @PATCH("clubs/dashboard/me/members/{memberId}")
+    suspend fun updateMember(
+        @Path("memberId") memberId: Int,
+        @Body body: Map<String, @JvmSuppressWildcards Any>
+    ): Response<ApiResponse<ClubMemberDto>>
+
+    @DELETE("clubs/dashboard/me/members/{memberId}")
+    suspend fun removeMember(@Path("memberId") memberId: Int): Response<ApiResponse<Unit>>
+
+    @PATCH("clubs/dashboard/me/player-requests/{requestId}")
+    suspend fun handleJoinRequest(
+        @Path("requestId") requestId: Int,
+        @Body body: Map<String, @JvmSuppressWildcards Any>
+    ): Response<ApiResponse<ClubJoinRequestDto>>
+
+    @POST("clubs/dashboard/me/approval-request")
+    suspend fun submitApprovalRequest(): Response<ApiResponse<Unit>>
+
+    @POST("clubs/dashboard/me/matches")
+    suspend fun createClubMatch(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ApiResponse<MatchDto>>
+
     @GET("matches")
     suspend fun getMatches(
         @Query("status") status: String? = null,

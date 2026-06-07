@@ -14,6 +14,7 @@ import turfbeat.com.ui.screens.auth.RegistrationScreen
 import turfbeat.com.ui.screens.auth.SignInScreen
 import turfbeat.com.ui.screens.clubs.ClubDetailScreen
 import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
+import turfbeat.com.ui.screens.dashboard.ClubDashboardScreen
 import turfbeat.com.ui.screens.dashboard.PlayerDashboardScreen
 import turfbeat.com.ui.screens.home.HomeScreen
 import turfbeat.com.ui.screens.matches.MatchBoardScreen
@@ -148,6 +149,10 @@ fun NavGraph(
                 onClubClick = { navController.navigate(Routes.clubDetail(it)) },
                 onMatchClick = { navController.navigate(Routes.matchDetail(it)) }
             )
+        }
+
+        composable(Routes.CLUB_DASHBOARD) {
+            ClubDashboardScreen(onNavigateBack = { navController.popBackStack() })
         }
     }
 }
