@@ -11,10 +11,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import turfbeat.com.BuildConfig
 import turfbeat.com.data.remote.ApiService
 import turfbeat.com.data.remote.AuthInterceptor
+import turfbeat.com.data.remote.ChatSocketService
 import turfbeat.com.data.remote.TokenManager
 import turfbeat.com.data.repository.AuthRepository
 import turfbeat.com.data.repository.ClubRepository
 import turfbeat.com.data.repository.MatchRepository
+import turfbeat.com.data.repository.NotificationRepository
 import turfbeat.com.data.repository.UserRepository
 import turfbeat.com.data.repository.VenueRepository
 import turfbeat.com.ui.viewmodel.*
@@ -60,6 +62,8 @@ val appModule = module {
     single { VenueRepository(get<ApiService>()) }
     single { UserRepository(get<ApiService>()) }
     single { MatchRepository(get<ApiService>()) }
+    single { NotificationRepository(get<ApiService>()) }
+    single { ChatSocketService(get<TokenManager>(), get<Gson>()) }
 
     factory { AuthViewModel(get<AuthRepository>(), get<TokenManager>()) }
     factory { ClubViewModel(get<ClubRepository>()) }
@@ -68,4 +72,6 @@ val appModule = module {
     factory { MatchViewModel(get<MatchRepository>()) }
     factory { PlayerDashboardViewModel(get<UserRepository>(), get<ClubRepository>(), get<MatchRepository>()) }
     factory { ClubDashboardViewModel(get<ClubRepository>()) }
+    factory { ChatViewModel(get<ChatSocketService>(), get<MatchRepository>()) }
+    factory { NotificationViewModel(get<NotificationRepository>()) }
 }

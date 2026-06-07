@@ -21,6 +21,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_BASE_URL", "\"https://turfbeat.com/api\"")
+        buildConfigField("String", "SERVER_URL", "\"https://turfbeat.com\"")
     }
 
     buildTypes {
@@ -31,6 +32,7 @@ android {
         }
         debug {
             buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:3001/api\"")
+            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:3001\"")
         }
     }
     compileOptions {
@@ -78,4 +80,5 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+    implementation(libs.socketio.client)
 }

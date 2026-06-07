@@ -34,4 +34,12 @@ class MatchRepository(
     suspend fun getMyMatches(): ApiResponse<List<MatchDto>> {
         return safeApiCall { apiService.getMyMatches() }
     }
+
+    suspend fun getMatchChat(matchId: Int): ApiResponse<List<ChatMessageDto>> {
+        return safeApiCall { apiService.getMatchChat(matchId) }
+    }
+
+    suspend fun sendChatMessage(matchId: Int, message: String): ApiResponse<ChatMessageDto> {
+        return safeApiCall { apiService.sendChatMessage(matchId, SendMessageRequest(message)) }
+    }
 }

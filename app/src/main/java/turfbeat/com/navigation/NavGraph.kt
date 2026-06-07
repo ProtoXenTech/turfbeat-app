@@ -12,6 +12,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import turfbeat.com.ui.screens.auth.ForgotPasswordScreen
 import turfbeat.com.ui.screens.auth.RegistrationScreen
 import turfbeat.com.ui.screens.auth.SignInScreen
+import turfbeat.com.ui.screens.chat.ChatScreen
 import turfbeat.com.ui.screens.clubs.ClubDetailScreen
 import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
 import turfbeat.com.ui.screens.dashboard.ClubDashboardScreen
@@ -19,6 +20,7 @@ import turfbeat.com.ui.screens.dashboard.PlayerDashboardScreen
 import turfbeat.com.ui.screens.home.HomeScreen
 import turfbeat.com.ui.screens.matches.MatchBoardScreen
 import turfbeat.com.ui.screens.matches.MatchDetailScreen
+import turfbeat.com.ui.screens.notifications.NotificationsScreen
 import turfbeat.com.ui.screens.players.PlayerDetailScreen
 import turfbeat.com.ui.screens.players.PlayerDirectoryScreen
 import turfbeat.com.ui.screens.splash.SplashScreen
@@ -153,6 +155,15 @@ fun NavGraph(
 
         composable(Routes.CLUB_DASHBOARD) {
             ClubDashboardScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.MATCH_CHAT, arguments = listOf(navArgument("matchId") { type = NavType.IntType })) {
+            val matchId = it.arguments?.getInt("matchId") ?: return@composable
+            ChatScreen(matchId = matchId, onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.NOTIFICATIONS) {
+            NotificationsScreen(onNavigateBack = { navController.popBackStack() })
         }
     }
 }
