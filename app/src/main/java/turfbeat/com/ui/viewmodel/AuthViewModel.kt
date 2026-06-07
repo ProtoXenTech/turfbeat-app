@@ -13,7 +13,11 @@ data class AuthUiState(
     val isLoggedIn: Boolean? = null,
     val user: UserDto? = null,
     val userName: String? = null,
-    val error: String? = null
+    val error: String? = null,
+    val otpSent: Boolean = false,
+    val registrationComplete: Boolean = false,
+    val phoneAvailable: Boolean? = null,
+    val emailAvailable: Boolean? = null
 )
 
 class AuthViewModel(
@@ -49,9 +53,7 @@ class AuthViewModel(
                     error = result.error
                 )
             }
-            if (result.success) {
-                loadProfile()
-            }
+            if (result.success) loadProfile()
         }
     }
 
@@ -59,14 +61,19 @@ class AuthViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.verifyOtp(email, otp)
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    isLoggedIn = result.success,
-                    user = result.data?.user,
-                    userName = result.data?.user?.fullName,
-                    error = result.error
-                )
+            if (result.success) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isLoggedIn = true,
+                        registrationComplete = true,
+                        user = result.data?.user,
+                        userName = result.data?.user?.fullName,
+                        error = null
+                    )
+                }
+            } else {
+                _uiState.update { it.copy(isLoading = false, error = result.error) }
             }
         }
     }
@@ -75,27 +82,25 @@ class AuthViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.sendOtp(email)
-            _uiState.update { it.copy(isLoading = false, error = result.error) }
-        }
-    }
-
-    fun checkPhone(phone: String): Boolean {
-        var available = true
-        viewModelScope.launch {
-            val result = authRepository.checkPhone(phone)
-            if (!result.success) {
-                _uiState.update { it.copy(error = result.error) }
-                available = false
+            _uiState.update {
+                it.copy(isLoading = false, otpSent = result.success, error = result.error)
             }
         }
-        return available
     }
 
-    fun forgotPassword(email: String) {
+    suspend fun checkPhone(phone: String): Boolean {
+        val result = authRepository.checkPhone(phone)
+        _uiState.update { it.copy(phoneAvailable = result.success, error = if (result.success) null else result.error) }
+        return result.success
+    }
+
+    fun sendForgotOtp(email: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.forgotPassword(email)
-            _uiState.update { it.copy(isLoading = false, error = result.error) }
+            _uiState.update {
+                it.copy(isLoading = false, otpSent = result.success, error = result.error)
+            }
         }
     }
 
@@ -103,16 +108,16 @@ class AuthViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.resetPassword(email, otp, newPassword)
-            _uiState.update { it.copy(isLoading = false, error = result.error) }
+            _uiState.update {
+                it.copy(isLoading = false, error = result.error)
+            }
         }
     }
 
     private suspend fun loadProfile() {
         val result = authRepository.getProfile()
         if (result.success) {
-            _uiState.update {
-                it.copy(user = result.data, userName = result.data?.fullName)
-            }
+            _uiState.update { it.copy(user = result.data, userName = result.data?.fullName) }
         }
     }
 
@@ -125,5 +130,9 @@ class AuthViewModel(
 
     fun clearError() {
         _uiState.update { it.copy(error = null) }
+    }
+
+    fun resetRegistrationState() {
+        _uiState.update { it.copy(otpSent = false, registrationComplete = false, phoneAvailable = null, emailAvailable = null) }
     }
 }

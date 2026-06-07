@@ -111,7 +111,7 @@ fun AdminDashboardScreen(
                                     Spacer(modifier = Modifier.height(8.dp))
                                 }
                                 items(state.players, key = { it.id }) { player ->
-                                    AdminPlayerCard(player = player, onDelete = { viewModel.deleteClub(player.id) })
+                                    AdminPlayerCard(player = player, onDelete = { viewModel.deletePlayer(player.id) })
                                 }
                             }
                             3 -> {

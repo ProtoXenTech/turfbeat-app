@@ -131,7 +131,7 @@ fun ChatScreen(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 items(state.messages, key = { it.id }) { msg ->
-                    ChatBubble(message = msg, isMine = false)
+                    ChatBubble(message = msg, isMine = msg.userId == (state.currentUserId ?: -1))
                 }
             }
         }

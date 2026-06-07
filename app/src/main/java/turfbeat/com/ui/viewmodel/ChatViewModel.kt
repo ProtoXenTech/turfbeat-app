@@ -6,18 +6,21 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import turfbeat.com.data.model.ChatMessageDto
 import turfbeat.com.data.remote.ChatSocketService
+import turfbeat.com.data.remote.TokenManager
 import turfbeat.com.data.repository.MatchRepository
 
 data class ChatState(
     val messages: List<ChatMessageDto> = emptyList(),
     val isLoading: Boolean = false,
     val connected: Boolean = false,
+    val currentUserId: Int? = null,
     val error: String? = null
 )
 
 class ChatViewModel(
     private val chatSocket: ChatSocketService,
-    private val matchRepository: MatchRepository
+    private val matchRepository: MatchRepository,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ChatState())
@@ -28,7 +31,8 @@ class ChatViewModel(
     fun connect(matchId: Int) {
         currentMatchId = matchId
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            val userId = tokenManager.getUserId()
+            _state.update { it.copy(isLoading = true, currentUserId = userId) }
 
             val result = matchRepository.getMatchChat(matchId)
             _state.update {

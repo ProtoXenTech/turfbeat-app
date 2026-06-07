@@ -39,4 +39,8 @@ class UserRepository(
     suspend fun updateProfile(data: Map<String, Any>): ApiResponse<UserDto> {
         return safeApiCall { apiService.updateProfile(data) }
     }
+
+    suspend fun deleteUser(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.deleteUser(id) }
+    }
 }

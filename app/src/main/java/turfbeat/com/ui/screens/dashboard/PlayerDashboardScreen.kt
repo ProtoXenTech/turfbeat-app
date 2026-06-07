@@ -65,7 +65,7 @@ fun PlayerDashboardScreen(
                 modifier = Modifier.fillMaxSize().padding(padding).background(Bg)
             ) {
                 item {
-                    ProfileCard(profile = state.profile)
+                    ProfileCard(profile = state.profile, clubsCount = state.myClubs.size, matchesCount = state.myMatches.size)
                 }
 
                 item {
@@ -111,7 +111,7 @@ fun PlayerDashboardScreen(
 }
 
 @Composable
-private fun ProfileCard(profile: turfbeat.com.data.model.UserDto?) {
+private fun ProfileCard(profile: turfbeat.com.data.model.UserDto?, clubsCount: Int = 0, matchesCount: Int = 0) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         shape = RoundedCornerShape(18.dp),
@@ -150,8 +150,8 @@ private fun ProfileCard(profile: turfbeat.com.data.model.UserDto?) {
             modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            StatItem("Clubs", "${profile?.let { 1 } ?: 0}")
-            StatItem("Matches", "${profile?.let { 0 } ?: 0}")
+            StatItem("Clubs", "$clubsCount")
+            StatItem("Matches", "$matchesCount")
             StatItem("Rating", "—")
         }
     }

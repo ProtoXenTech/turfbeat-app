@@ -72,7 +72,7 @@ val appModule = module {
     factory { MatchViewModel(get<MatchRepository>()) }
     factory { PlayerDashboardViewModel(get<UserRepository>(), get<ClubRepository>(), get<MatchRepository>()) }
     factory { ClubDashboardViewModel(get<ClubRepository>()) }
-    factory { ChatViewModel(get<ChatSocketService>(), get<MatchRepository>()) }
+    factory { ChatViewModel(get<ChatSocketService>(), get<MatchRepository>(), get<TokenManager>()) }
     factory { NotificationViewModel(get<NotificationRepository>()) }
     factory { VenueDashboardViewModel(get<VenueRepository>()) }
     factory { AdminDashboardViewModel(get<ClubRepository>(), get<VenueRepository>(), get<MatchRepository>(), get<UserRepository>()) }

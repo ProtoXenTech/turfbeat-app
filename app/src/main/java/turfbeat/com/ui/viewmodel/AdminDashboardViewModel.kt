@@ -82,4 +82,11 @@ class AdminDashboardViewModel(
             load()
         }
     }
+
+    fun deletePlayer(id: Int) {
+        viewModelScope.launch {
+            userRepository.deleteUser(id)
+            load()
+        }
+    }
 }

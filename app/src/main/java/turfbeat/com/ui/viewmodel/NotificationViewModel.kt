@@ -41,6 +41,7 @@ class NotificationViewModel(
     }
 
     private suspend fun load() {
+        _state.update { it.copy(isLoading = true) }
         val result = notificationRepository.getNotifications()
         if (result.success) {
             val list = result.data ?: emptyList()

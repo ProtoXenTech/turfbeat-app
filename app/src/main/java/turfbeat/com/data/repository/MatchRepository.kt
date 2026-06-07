@@ -46,4 +46,24 @@ class MatchRepository(
     suspend fun deleteMatch(id: Int): ApiResponse<Unit> {
         return safeApiCall { apiService.deleteMatch(id) }
     }
+
+    suspend fun updateMatchStatus(id: Int, status: String): ApiResponse<MatchDto> {
+        return safeApiCall { apiService.updateMatchStatus(id, mapOf("status" to status)) }
+    }
+
+    suspend fun expressInterest(matchId: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.expressInterest(matchId) }
+    }
+
+    suspend fun approveInterest(matchId: Int, interestId: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.approveInterest(matchId, interestId) }
+    }
+
+    suspend fun rateMatch(matchId: Int, ratings: Map<String, Any>): ApiResponse<Unit> {
+        return safeApiCall { apiService.rateMatch(matchId, ratings) }
+    }
+
+    suspend fun getMatchRatings(matchId: Int): ApiResponse<List<MatchRatingDto>> {
+        return safeApiCall { apiService.getMatchRatings(matchId) }
+    }
 }

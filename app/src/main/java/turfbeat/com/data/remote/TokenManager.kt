@@ -61,6 +61,10 @@ class TokenManager(
         return context.tokenDataStore.data.first()[refreshTokenKey]
     }
 
+    suspend fun getUserId(): Int? {
+        return context.tokenDataStore.data.first()[userIdKey]?.toIntOrNull()
+    }
+
     suspend fun clearSession() {
         context.tokenDataStore.edit { it.clear() }
     }
