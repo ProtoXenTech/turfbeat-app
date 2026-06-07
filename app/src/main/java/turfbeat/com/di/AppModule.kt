@@ -66,4 +66,5 @@ val appModule = module {
     factory { VenueViewModel(get<VenueRepository>()) }
     factory { PlayerViewModel(get<UserRepository>()) }
     factory { MatchViewModel(get<MatchRepository>()) }
+    factory { PlayerDashboardViewModel(get<UserRepository>(), get<ClubRepository>(), get<MatchRepository>()) }
 }

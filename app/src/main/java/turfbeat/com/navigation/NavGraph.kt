@@ -14,6 +14,7 @@ import turfbeat.com.ui.screens.auth.RegistrationScreen
 import turfbeat.com.ui.screens.auth.SignInScreen
 import turfbeat.com.ui.screens.clubs.ClubDetailScreen
 import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
+import turfbeat.com.ui.screens.dashboard.PlayerDashboardScreen
 import turfbeat.com.ui.screens.home.HomeScreen
 import turfbeat.com.ui.screens.matches.MatchBoardScreen
 import turfbeat.com.ui.screens.matches.MatchDetailScreen
@@ -139,6 +140,14 @@ fun NavGraph(
         composable(Routes.MATCH_DETAIL, arguments = listOf(navArgument("matchId") { type = NavType.IntType })) {
             val matchId = it.arguments?.getInt("matchId") ?: return@composable
             MatchDetailScreen(matchId = matchId, onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.PLAYER_DASHBOARD) {
+            PlayerDashboardScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onClubClick = { navController.navigate(Routes.clubDetail(it)) },
+                onMatchClick = { navController.navigate(Routes.matchDetail(it)) }
+            )
         }
     }
 }

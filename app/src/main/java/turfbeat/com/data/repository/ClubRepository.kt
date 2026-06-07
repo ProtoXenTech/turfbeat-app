@@ -49,6 +49,10 @@ class ClubRepository(
         return safeApiCall { apiService.updateMyClub(data) }
     }
 
+    suspend fun getMyClubs(): ApiResponse<List<ClubDto>> {
+        return safeApiCall { apiService.getMyClubs() }
+    }
+
     suspend fun joinClub(clubId: Int): ApiResponse<ClubJoinRequestDto> {
         return safeApiCall { apiService.joinClub(clubId) }
     }

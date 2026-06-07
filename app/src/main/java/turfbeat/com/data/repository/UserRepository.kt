@@ -31,4 +31,12 @@ class UserRepository(
     suspend fun getPlayerDetail(id: Int): ApiResponse<UserDto> {
         return safeApiCall { apiService.getPlayerDetail(id) }
     }
+
+    suspend fun getMyProfile(): ApiResponse<UserDto> {
+        return safeApiCall { apiService.getMyProfile() }
+    }
+
+    suspend fun updateProfile(data: Map<String, Any>): ApiResponse<UserDto> {
+        return safeApiCall { apiService.updateProfile(data) }
+    }
 }

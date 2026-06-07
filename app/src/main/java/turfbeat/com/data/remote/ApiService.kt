@@ -81,6 +81,9 @@ interface ApiService {
     @POST("clubs/player/me")
     suspend fun joinClub(@Query("clubId") clubId: Int): Response<ApiResponse<ClubJoinRequestDto>>
 
+    @GET("clubs/player/me")
+    suspend fun getMyClubs(): Response<ApiResponse<List<ClubDto>>>
+
     @DELETE("clubs/player/me/clubs/{clubId}")
     suspend fun leaveClub(@Path("clubId") clubId: Int): Response<ApiResponse<Unit>>
 

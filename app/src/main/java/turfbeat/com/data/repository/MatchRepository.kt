@@ -30,4 +30,8 @@ class MatchRepository(
     suspend fun getMatchDetail(id: Int): ApiResponse<MatchDto> {
         return safeApiCall { apiService.getMatchDetail(id) }
     }
+
+    suspend fun getMyMatches(): ApiResponse<List<MatchDto>> {
+        return safeApiCall { apiService.getMyMatches() }
+    }
 }
