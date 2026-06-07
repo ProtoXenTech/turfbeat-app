@@ -14,6 +14,7 @@ import turfbeat.com.data.remote.AuthInterceptor
 import turfbeat.com.data.remote.TokenManager
 import turfbeat.com.data.repository.AuthRepository
 import turfbeat.com.data.repository.ClubRepository
+import turfbeat.com.data.repository.MatchRepository
 import turfbeat.com.data.repository.UserRepository
 import turfbeat.com.data.repository.VenueRepository
 import turfbeat.com.ui.viewmodel.*
@@ -58,9 +59,11 @@ val appModule = module {
     single { ClubRepository(get<ApiService>()) }
     single { VenueRepository(get<ApiService>()) }
     single { UserRepository(get<ApiService>()) }
+    single { MatchRepository(get<ApiService>()) }
 
     factory { AuthViewModel(get<AuthRepository>(), get<TokenManager>()) }
     factory { ClubViewModel(get<ClubRepository>()) }
     factory { VenueViewModel(get<VenueRepository>()) }
     factory { PlayerViewModel(get<UserRepository>()) }
+    factory { MatchViewModel(get<MatchRepository>()) }
 }
