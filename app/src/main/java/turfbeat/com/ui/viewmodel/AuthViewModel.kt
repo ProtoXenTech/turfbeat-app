@@ -12,6 +12,7 @@ data class AuthUiState(
     val isLoading: Boolean = false,
     val isLoggedIn: Boolean? = null,
     val user: UserDto? = null,
+    val userName: String? = null,
     val error: String? = null
 )
 
@@ -44,8 +45,73 @@ class AuthViewModel(
                     isLoading = false,
                     isLoggedIn = result.success,
                     user = result.data?.user,
+                    userName = result.data?.user?.fullName,
                     error = result.error
                 )
+            }
+            if (result.success) {
+                loadProfile()
+            }
+        }
+    }
+
+    fun register(email: String, password: String, otp: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            val result = authRepository.verifyOtp(email, otp)
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    isLoggedIn = result.success,
+                    user = result.data?.user,
+                    userName = result.data?.user?.fullName,
+                    error = result.error
+                )
+            }
+        }
+    }
+
+    fun sendOtp(email: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            val result = authRepository.sendOtp(email)
+            _uiState.update { it.copy(isLoading = false, error = result.error) }
+        }
+    }
+
+    fun checkPhone(phone: String): Boolean {
+        var available = true
+        viewModelScope.launch {
+            val result = authRepository.checkPhone(phone)
+            if (!result.success) {
+                _uiState.update { it.copy(error = result.error) }
+                available = false
+            }
+        }
+        return available
+    }
+
+    fun forgotPassword(email: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            val result = authRepository.forgotPassword(email)
+            _uiState.update { it.copy(isLoading = false, error = result.error) }
+        }
+    }
+
+    fun resetPassword(email: String, otp: String, newPassword: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            val result = authRepository.resetPassword(email, otp, newPassword)
+            _uiState.update { it.copy(isLoading = false, error = result.error) }
+        }
+    }
+
+    private suspend fun loadProfile() {
+        val result = authRepository.getProfile()
+        if (result.success) {
+            _uiState.update {
+                it.copy(user = result.data, userName = result.data?.fullName)
             }
         }
     }
