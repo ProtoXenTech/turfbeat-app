@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="forest">#FF0E3B1E</color>
+    <color name="forest_2">#FF16542B</color>
+    <color name="pitch">#FF39C24A</color>
+    <color name="pitch_2">#FF2BA73C</color>
+    <color name="pitch_soft">#FFD4F2D6</color>
+    <color name="gold">#FFC4951B</color>
+    <color name="hot">#FFFF5A1F</color>
+    <color name="ink">#FF0B1410</color>
+    <color name="ink_2">#FF3B4A41</color>
+    <color name="ink_3">#FF6B7770</color>
+    <color name="line">#FFD9D9D2</color>
+    <color name="line_2">#FFC7C7BF</color>
+    <color name="panel">#FFECECE6</color>
+    <color name="panel_2">#FFE2E2DA</color>
+    <color name="bg">#FFF4F4F1</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
