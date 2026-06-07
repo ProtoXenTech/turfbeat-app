@@ -44,8 +44,8 @@ fun HomeScreen(
             TopAppBar(
                 title = { Text("TurfBeat", fontWeight = FontWeight.Bold, color = Forest) },
                 actions = {
-                    TextButton(onClick = onLogout) {
-                        Text("Logout", color = Hot)
+                    TextButton(onClick = { onNavigate("settings") }) {
+                        Text("⚙️", fontSize = 18.sp)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Bg)

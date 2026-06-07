@@ -15,6 +15,12 @@ import turfbeat.com.ui.screens.auth.SignInScreen
 import turfbeat.com.ui.screens.chat.ChatScreen
 import turfbeat.com.ui.screens.clubs.ClubDetailScreen
 import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
+import turfbeat.com.ui.screens.settings.AboutScreen
+import turfbeat.com.ui.screens.settings.ContactScreen
+import turfbeat.com.ui.screens.settings.HelpScreen
+import turfbeat.com.ui.screens.settings.PrivacyScreen
+import turfbeat.com.ui.screens.settings.SettingsScreen
+import turfbeat.com.ui.screens.settings.TermsScreen
 import turfbeat.com.ui.screens.dashboard.AdminDashboardScreen
 import turfbeat.com.ui.screens.dashboard.ClubDashboardScreen
 import turfbeat.com.ui.screens.dashboard.PlayerDashboardScreen
@@ -94,6 +100,7 @@ fun NavGraph(
                         "venues" -> navController.navigate(Routes.VENUE_DIRECTORY)
                         "player_dashboard" -> navController.navigate(Routes.PLAYER_DASHBOARD)
                         "club_dashboard" -> navController.navigate(Routes.CLUB_DASHBOARD)
+                        "settings" -> navController.navigate(Routes.SETTINGS)
                     }
                 }
             )
@@ -175,5 +182,27 @@ fun NavGraph(
         composable(Routes.NOTIFICATIONS) {
             NotificationsScreen(onNavigateBack = { navController.popBackStack() })
         }
+
+        composable(Routes.SETTINGS) {
+            val authViewModel: AuthViewModel = koinViewModel()
+            SettingsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToAbout = { navController.navigate(Routes.ABOUT) },
+                onNavigateToHelp = { navController.navigate(Routes.HELP) },
+                onNavigateToContact = { navController.navigate(Routes.CONTACT) },
+                onNavigateToTerms = { navController.navigate(Routes.TERMS) },
+                onNavigateToPrivacy = { navController.navigate(Routes.PRIVACY) },
+                onLogout = {
+                    authViewModel.logout()
+                    navController.navigate(Routes.SIGN_IN) { popUpTo(0) { inclusive = true } }
+                }
+            )
+        }
+
+        composable(Routes.ABOUT) { AboutScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(Routes.HELP) { HelpScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(Routes.CONTACT) { ContactScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(Routes.TERMS) { TermsScreen(onNavigateBack = { navController.popBackStack() }) }
+        composable(Routes.PRIVACY) { PrivacyScreen(onNavigateBack = { navController.popBackStack() }) }
     }
 }
