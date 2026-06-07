@@ -74,4 +74,6 @@ val appModule = module {
     factory { ClubDashboardViewModel(get<ClubRepository>()) }
     factory { ChatViewModel(get<ChatSocketService>(), get<MatchRepository>()) }
     factory { NotificationViewModel(get<NotificationRepository>()) }
+    factory { VenueDashboardViewModel(get<VenueRepository>()) }
+    factory { AdminDashboardViewModel(get<ClubRepository>(), get<VenueRepository>(), get<MatchRepository>(), get<UserRepository>()) }
 }

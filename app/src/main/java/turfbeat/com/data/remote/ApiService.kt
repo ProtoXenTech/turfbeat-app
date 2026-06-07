@@ -192,4 +192,25 @@ interface ApiService {
 
     @POST("upload/club-logo")
     suspend fun uploadClubLogo(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ApiResponse<String>>
+
+    @GET("venues/admin/pending")
+    suspend fun getPendingVenues(): Response<ApiResponse<List<VenueDto>>>
+
+    @PATCH("venues/{id}/approve")
+    suspend fun approveVenue(@Path("id") id: Int): Response<ApiResponse<Unit>>
+
+    @DELETE("venues/{id}")
+    suspend fun deleteVenue(@Path("id") id: Int): Response<ApiResponse<Unit>>
+
+    @DELETE("clubs/{id}")
+    suspend fun deleteClub(@Path("id") id: Int): Response<ApiResponse<Unit>>
+
+    @PATCH("clubs/{id}/approve")
+    suspend fun approveClub(@Path("id") id: Int): Response<ApiResponse<Unit>>
+
+    @DELETE("matches/{id}")
+    suspend fun deleteMatch(@Path("id") id: Int): Response<ApiResponse<Unit>>
+
+    @DELETE("users/{id}")
+    suspend fun deleteUser(@Path("id") id: Int): Response<ApiResponse<Unit>>
 }

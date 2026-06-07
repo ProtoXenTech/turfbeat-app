@@ -15,8 +15,10 @@ import turfbeat.com.ui.screens.auth.SignInScreen
 import turfbeat.com.ui.screens.chat.ChatScreen
 import turfbeat.com.ui.screens.clubs.ClubDetailScreen
 import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
+import turfbeat.com.ui.screens.dashboard.AdminDashboardScreen
 import turfbeat.com.ui.screens.dashboard.ClubDashboardScreen
 import turfbeat.com.ui.screens.dashboard.PlayerDashboardScreen
+import turfbeat.com.ui.screens.dashboard.VenueDashboardScreen
 import turfbeat.com.ui.screens.home.HomeScreen
 import turfbeat.com.ui.screens.matches.MatchBoardScreen
 import turfbeat.com.ui.screens.matches.MatchDetailScreen
@@ -155,6 +157,14 @@ fun NavGraph(
 
         composable(Routes.CLUB_DASHBOARD) {
             ClubDashboardScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.VENUE_DASHBOARD) {
+            VenueDashboardScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.ADMIN_DASHBOARD) {
+            AdminDashboardScreen(onNavigateBack = { navController.popBackStack() })
         }
 
         composable(Routes.MATCH_CHAT, arguments = listOf(navArgument("matchId") { type = NavType.IntType })) {

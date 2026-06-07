@@ -80,4 +80,12 @@ class ClubRepository(
     suspend fun createClubMatch(data: Map<String, Any>): ApiResponse<MatchDto> {
         return safeApiCall { apiService.createClubMatch(data) }
     }
+
+    suspend fun deleteClub(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.deleteClub(id) }
+    }
+
+    suspend fun approveClub(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.approveClub(id) }
+    }
 }

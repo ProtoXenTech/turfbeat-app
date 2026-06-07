@@ -42,4 +42,8 @@ class MatchRepository(
     suspend fun sendChatMessage(matchId: Int, message: String): ApiResponse<ChatMessageDto> {
         return safeApiCall { apiService.sendChatMessage(matchId, SendMessageRequest(message)) }
     }
+
+    suspend fun deleteMatch(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.deleteMatch(id) }
+    }
 }

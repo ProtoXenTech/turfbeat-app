@@ -26,4 +26,24 @@ class VenueRepository(
     suspend fun getVenueDetail(id: Int): ApiResponse<VenueDto> {
         return safeApiCall { apiService.getVenueDetail(id) }
     }
+
+    suspend fun getMyVenues(): ApiResponse<List<VenueDto>> {
+        return safeApiCall { apiService.getMyVenues() }
+    }
+
+    suspend fun createVenue(request: CreateVenueRequest): ApiResponse<VenueDto> {
+        return safeApiCall { apiService.createVenue(request) }
+    }
+
+    suspend fun deleteVenue(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.deleteVenue(id) }
+    }
+
+    suspend fun getPendingVenues(): ApiResponse<List<VenueDto>> {
+        return safeApiCall { apiService.getPendingVenues() }
+    }
+
+    suspend fun approveVenue(id: Int): ApiResponse<Unit> {
+        return safeApiCall { apiService.approveVenue(id) }
+    }
 }
