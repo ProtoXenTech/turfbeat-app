@@ -4,12 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import org.koin.compose.viewmodel.koinViewModel
 import turfbeat.com.ui.screens.auth.ForgotPasswordScreen
 import turfbeat.com.ui.screens.auth.RegistrationScreen
 import turfbeat.com.ui.screens.auth.SignInScreen
+import turfbeat.com.ui.screens.clubs.ClubDetailScreen
+import turfbeat.com.ui.screens.clubs.ClubDirectoryScreen
 import turfbeat.com.ui.screens.home.HomeScreen
 import turfbeat.com.ui.screens.splash.SplashScreen
 import turfbeat.com.ui.viewmodel.AuthViewModel
@@ -104,6 +108,26 @@ fun NavGraph(
                         "club_dashboard" -> navController.navigate(Routes.CLUB_DASHBOARD)
                     }
                 }
+            )
+        }
+
+        composable(Routes.CLUB_DIRECTORY) {
+            ClubDirectoryScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onClubClick = { clubId ->
+                    navController.navigate(Routes.clubDetail(clubId))
+                }
+            )
+        }
+
+        composable(
+            route = Routes.CLUB_DETAIL,
+            arguments = listOf(navArgument("clubId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val clubId = backStackEntry.arguments?.getInt("clubId") ?: return@composable
+            ClubDetailScreen(
+                clubId = clubId,
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }

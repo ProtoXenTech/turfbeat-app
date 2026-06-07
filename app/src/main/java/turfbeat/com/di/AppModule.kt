@@ -15,6 +15,7 @@ import turfbeat.com.data.remote.TokenManager
 import turfbeat.com.data.repository.AuthRepository
 import turfbeat.com.data.repository.ClubRepository
 import turfbeat.com.ui.viewmodel.AuthViewModel
+import turfbeat.com.ui.viewmodel.ClubViewModel
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
@@ -73,5 +74,9 @@ val appModule = module {
 
     factory {
         AuthViewModel(get<AuthRepository>(), get<TokenManager>())
+    }
+
+    factory {
+        ClubViewModel(get<ClubRepository>())
     }
 }
