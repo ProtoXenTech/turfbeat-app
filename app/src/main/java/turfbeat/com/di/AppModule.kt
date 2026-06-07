@@ -14,8 +14,9 @@ import turfbeat.com.data.remote.AuthInterceptor
 import turfbeat.com.data.remote.TokenManager
 import turfbeat.com.data.repository.AuthRepository
 import turfbeat.com.data.repository.ClubRepository
-import turfbeat.com.ui.viewmodel.AuthViewModel
-import turfbeat.com.ui.viewmodel.ClubViewModel
+import turfbeat.com.data.repository.UserRepository
+import turfbeat.com.data.repository.VenueRepository
+import turfbeat.com.ui.viewmodel.*
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
@@ -32,13 +33,8 @@ val appModule = module {
 
     single {
         val logging = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         }
-
         OkHttpClient.Builder()
             .addInterceptor(get<AuthInterceptor>())
             .addInterceptor(logging)
@@ -56,27 +52,15 @@ val appModule = module {
             .build()
     }
 
-    single {
-        get<Retrofit>().create(ApiService::class.java)
-    }
+    single { get<Retrofit>().create(ApiService::class.java) }
+    single { TokenManager(androidContext()) }
+    single { AuthRepository(get<ApiService>(), get<TokenManager>()) }
+    single { ClubRepository(get<ApiService>()) }
+    single { VenueRepository(get<ApiService>()) }
+    single { UserRepository(get<ApiService>()) }
 
-    single {
-        TokenManager(androidContext())
-    }
-
-    single {
-        AuthRepository(get<ApiService>(), get<TokenManager>())
-    }
-
-    single {
-        ClubRepository(get<ApiService>())
-    }
-
-    factory {
-        AuthViewModel(get<AuthRepository>(), get<TokenManager>())
-    }
-
-    factory {
-        ClubViewModel(get<ClubRepository>())
-    }
+    factory { AuthViewModel(get<AuthRepository>(), get<TokenManager>()) }
+    factory { ClubViewModel(get<ClubRepository>()) }
+    factory { VenueViewModel(get<VenueRepository>()) }
+    factory { PlayerViewModel(get<UserRepository>()) }
 }
